@@ -36,19 +36,9 @@ func main() {
 	}()
 
 	go func() {
-
-		for outputs != nil {
-			fmt.Println("...")
-			select {
-			case m, ok := <-outputs:
-				if !ok {
-					outputs = nil
-					break
-				}
-				fmt.Println(m)
-			}
+		for m := range outputs {
+			fmt.Println(m)
 		}
-
 	}()
 
 	wg.Wait()
