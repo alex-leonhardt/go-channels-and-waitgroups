@@ -35,13 +35,15 @@ func main() {
 		wg.Done()
 	}()
 
+	done := make(chan bool)
 	go func() {
 		for m := range outputs {
 			fmt.Println(m)
 		}
+		done <- true
 	}()
 
 	wg.Wait()
 	close(outputs)
-
+	<-done
 }
